@@ -12,7 +12,7 @@ namespace InvoiceAPI.Controllers
         [HttpPost("invoice")]
         public IActionResult CreateAndDownloadInvoice([FromBody] InvoiceData invoiceData)
         {
-            var template = new CompanyeInvoiceTemplate();  // İstediğiniz şablonu burada seçin
+            var template = new CompanyInvoiceTemplate();  // İstediğiniz şablonu burada seçin
             string filePath = InvoiceGenerator.GenerateInvoice(invoiceData, template);
 
             if (!System.IO.File.Exists(filePath))

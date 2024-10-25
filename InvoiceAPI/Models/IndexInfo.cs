@@ -2,9 +2,10 @@
 {
     public class IndexInfo
     {
-        public decimal AktifEndeks { get; set; }
-        public decimal T1Endeks { get; set; }
-        public decimal T2Endeks { get; set; }
-        public decimal T3Endeks { get; set; }
+        public decimal ActiveIndex { get; set; }
+        public decimal T1Index { get; set; }
+        public decimal T2Index { get; set; }
+        public decimal T3Index { get; set; }
     }
+
 }
