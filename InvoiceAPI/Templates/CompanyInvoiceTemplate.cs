@@ -36,10 +36,9 @@ namespace InvoiceAPI.Templates
                         column.Item().Text($"E-Posta: {_companyInfo.Email}");
                         column.Item().Text($"Vergi Dairesi: {_companyInfo.TaxOffice}");
                         column.Item().Text($"Vergi No: {_companyInfo.TaxNumber}");
-
-                        //column.Item().Text(" "); // Boş satır
                         column.Item().PaddingTop(5).AlignLeft().Element(c => c.Width(220).LineHorizontal(1)); // Çizgi
                     });
+
 
                     row.ConstantItem(120).Height(100).Element(container =>
                     {
@@ -64,14 +63,13 @@ namespace InvoiceAPI.Templates
                         });
                     });
 
-                    column.Item().Text("");
                     // Endeks Bilgileri
                     if (invoiceData.IndexInfo != null)
                     {
 
                         column.Item().Element(c =>
                         {
-                            c.AlignLeft().Width(120).Table(table =>
+                            c.AlignLeft().Width(120).PaddingTop(15).Table(table =>
                             {
                                 table.ColumnsDefinition(columns =>
                                 {
@@ -93,10 +91,9 @@ namespace InvoiceAPI.Templates
                             });
                         });
                     }
-                    column.Item().Text("");
 
                     // Sağ alttaki fatura bilgileri tablosu
-                    column.Item().Element(c =>
+                    column.Item().PaddingTop(15).Element(c =>
                     {
                         c.AlignRight().Width(120).Table(table =>
                         {
@@ -128,10 +125,8 @@ namespace InvoiceAPI.Templates
                         });
                     });
 
-                    column.Item().Text("");
-
                     // Fatura kalemleri tablosu
-                    column.Item().Table(table =>
+                    column.Item().PaddingTop(15).Table(table =>
                     {
                         table.ColumnsDefinition(columns =>
                         {
@@ -177,8 +172,7 @@ namespace InvoiceAPI.Templates
                     });
 
                     // Alt toplam ve KDV bilgileri tablosu
-                    column.Item().Text("");
-                    column.Item().Element(c =>
+                    column.Item().PaddingTop(15).Element(c =>
                     {
                         c.AlignRight().Width(150).Table(table =>
                         {
@@ -202,7 +196,7 @@ namespace InvoiceAPI.Templates
                             table.Cell().Border(1).Padding(2).AlignRight().Text($"{grandTotal:C}").Bold().FontSize(7);
                         });
                     });
-                    //column.Item().Text("").PaddingTop(10);
+
                     page.Footer().Element(c =>
                     {
                         c.Padding(10).Border(1).Column(col =>
@@ -228,7 +222,7 @@ namespace InvoiceAPI.Templates
 
             });
         }
-
+        // Tablo Çizgi Tasarımları
         private static IContainer CellStyle(IContainer container) =>
             container.BorderBottom(1).PaddingVertical(5);
 

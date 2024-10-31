@@ -43,23 +43,21 @@ namespace InvoiceAPI.Templates
                     });
 
                     // Sağ tarafta Logo ve Firma Bilgileri
-                    row.ConstantItem(200).Column(column =>
+                    row.ConstantItem(200).AlignCenter().AlignMiddle().Column(column =>
                     {
                         column.Item().AlignCenter().AlignMiddle()
                             .Height(80)
                             .Image(Path.Combine(Directory.GetCurrentDirectory(), "data/images/logo.png"));
 
-                        column.Item().Text(_companyInfo.CompanyName).FontSize(14).Bold();
-                        column.Item().Text(_companyInfo.Address);
-                        column.Item().Text($"E-Posta: {_companyInfo.Email}");
-                        column.Item().Text($"Vergi Dairesi: {_companyInfo.TaxOffice}");
-                        column.Item().Text($"Vergi No: {_companyInfo.TaxNumber}");
-
+                        column.Item().AlignCenter().Text(_companyInfo.CompanyName).FontSize(14).Bold();
+                        column.Item().AlignCenter().Text(_companyInfo.Address);
+                        column.Item().AlignCenter().Text($"E-Posta: {_companyInfo.Email}");
+                        column.Item().AlignCenter().Text($"Vergi Dairesi: {_companyInfo.TaxOffice}");
+                        column.Item().AlignCenter().Text($"Vergi No: {_companyInfo.TaxNumber}");
                     });
-                });
-                
 
-                //column.Item().PaddingTop(5).Element(c => c.LineHorizontal(1).Background(Colors.Black));
+
+                });
                 // İçerik kısmı: Endeks Bilgileri ve Fatura Kalemleri
                 page.Content().Column(column =>
                 {
@@ -77,9 +75,10 @@ namespace InvoiceAPI.Templates
                     // Endeks Bilgileri
                     if (invoiceData.IndexInfo != null)
                     {
+
                         column.Item().Element(c =>
                         {
-                            c.AlignLeft().Width(120).Table(table =>
+                            c.AlignLeft().Width(120).PaddingTop(15).Table(table =>
                             {
                                 table.ColumnsDefinition(columns =>
                                 {
@@ -102,8 +101,41 @@ namespace InvoiceAPI.Templates
                         });
                     }
 
+                    // Sağ alttaki fatura bilgileri tablosu
+                    column.Item().PaddingTop(15).Element(c =>
+                    {
+                        c.AlignRight().Width(120).Table(table =>
+                        {
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.RelativeColumn(1); // Sol sütun (Etiketler)
+                                columns.RelativeColumn(1); // Sağ sütun (Değerler)
+                            });
+
+                            // Özelleştirme No
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text("Özelleştirme No").FontSize(7);
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text(invoiceData.InvoiceDetails.CustomizationNumber).FontSize(7);
+
+                            // Senaryo
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text("Senaryo").FontSize(7);
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text(invoiceData.InvoiceDetails.Scenario).FontSize(7);
+
+                            // Fatura Tipi
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text("Fatura Tipi").FontSize(7);
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text(invoiceData.InvoiceDetails.InvoiceType).FontSize(7);
+
+                            // Fatura Tarihi
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text("Fatura Tarihi").FontSize(7);
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text(invoiceData.InvoiceDetails.InvoiceDate.ToShortDateString()).FontSize(7);
+
+                            // Düzenleme Tarihi
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text("Düzenleme Tarihi").FontSize(7);
+                            table.Cell().Border(1).Padding(2).AlignLeft().Text(invoiceData.InvoiceDetails.EditDate.ToShortDateString()).FontSize(7);
+                        });
+                    });
+
                     // Fatura kalemleri tablosu
-                    column.Item().Table(table =>
+                    column.Item().PaddingTop(15).Table(table =>
                     {
                         table.ColumnsDefinition(columns =>
                         {
@@ -119,44 +151,47 @@ namespace InvoiceAPI.Templates
                         // Tablo başlıkları
                         table.Header(header =>
                         {
-                            header.Cell().Element(CellStyle).AlignCenter().Text("Sıra No").Bold();
-                            header.Cell().Element(CellStyle).AlignCenter().Text("Mal/Hizmet Cinsi").Bold();
-                            header.Cell().Element(CellStyle).AlignCenter().Text("Miktar").Bold();
-                            header.Cell().Element(CellStyle).AlignRight().Text("Birim Fiyat").Bold();
-                            header.Cell().Element(CellStyle).AlignRight().Text("Ek Vergiler").Bold();
-                            header.Cell().Element(CellStyle).AlignRight().Text("Ek Vergi Tutarı").Bold();
-                            header.Cell().Element(CellStyle).AlignRight().Text("Mal Hizmet Tutarı").Bold();
+
+                            header.Cell().Element(CellStyle).AlignCenter().Text("Sıra No").Bold().FontSize(10);
+                            header.Cell().Element(CellStyle).AlignCenter().Text("Mal/Hizmet Cinsi").Bold().FontSize(10);
+                            header.Cell().Element(CellStyle).AlignCenter().Text("Miktar").Bold().FontSize(10);
+                            header.Cell().Element(CellStyle).AlignCenter().Text("Birim Fiyat").Bold().FontSize(10);
+                            header.Cell().Element(CellStyle).AlignCenter().Text("Ek Vergiler").Bold().FontSize(10);
+                            header.Cell().Element(CellStyle).AlignCenter().Text("Ek Vergi Tutarı").Bold().FontSize(10);
+                            header.Cell().Element(CellStyle).AlignCenter().Text("Mal Hizmet Tutarı").Bold().FontSize(10);
                         });
 
-                        // Tablo satırları
                         int index = 1;
+
+                        // Tablo satırları
                         foreach (var item in invoiceData.Items)
                         {
                             decimal itemTotal = item.Quantity * item.UnitPrice;
                             decimal taxAmount = itemTotal * item.TaxRate / 100;
                             decimal itemTotalWithTax = itemTotal + taxAmount;
 
-                            table.Cell().Element(CellStyle).AlignCenter().Text($"{index++}");
-                            table.Cell().Element(CellStyle).AlignCenter().Text(item.Description);
-                            table.Cell().Element(CellStyle).AlignCenter().Text($"{item.Quantity}");
-                            table.Cell().Element(CellStyle).AlignRight().Text($"{item.UnitPrice:C}");
-                            table.Cell().Element(CellStyle).AlignRight().Text($"%{item.TaxRate}");
-                            table.Cell().Element(CellStyle).AlignRight().Text($"{taxAmount:C}");
-                            table.Cell().Element(CellStyle).AlignRight().Text($"{itemTotalWithTax:C}");
+                            table.Cell().Element(CellStyle).AlignCenter().Text($"{index++}").FontSize(9);
+                            table.Cell().Element(CellStyle).AlignCenter().Text(item.Description).FontSize(9);
+                            table.Cell().Element(CellStyle).AlignCenter().Text($"{item.Quantity}").FontSize(9);
+                            table.Cell().Element(CellStyle).AlignCenter().Text($"{item.UnitPrice:C}").FontSize(9);
+                            table.Cell().Element(CellStyle).AlignCenter().Text("%" + item.TaxRate.ToString("0")).FontSize(9);
+                            table.Cell().Element(CellStyle).AlignCenter().Text($"{taxAmount:C}").FontSize(9);
+                            table.Cell().Element(CellStyle).AlignCenter().Text($"{itemTotalWithTax:C}").FontSize(9);
                         }
                     });
 
-                    // Alt toplam ve KDV bilgileri
-                    column.Item().Element(c =>
+                    // Alt toplam ve KDV bilgileri tablosu
+                    column.Item().PaddingTop(15).Element(c =>
                     {
-                        c.AlignRight().PaddingTop(5).Width(150).Table(table =>
+                        c.AlignRight().Width(150).Table(table =>
                         {
                             table.ColumnsDefinition(columns =>
                             {
-                                columns.RelativeColumn(505); // Etiketler için geniş sütun
+                                columns.RelativeColumn(505); // Etiketler için daha geniş sütun
                                 columns.ConstantColumn(50); // Değerler için sabit genişlik
                             });
 
+                            // Mal Hizmet Toplam Tutarı
                             table.Cell().Border(1).Padding(2).AlignLeft().Text("Mal Hizmet Toplam Tutarı").FontSize(7);
                             table.Cell().Border(1).Padding(2).AlignRight().Text($"{totalAmount:C}").FontSize(7);
 
@@ -171,19 +206,18 @@ namespace InvoiceAPI.Templates
                         });
                     });
 
-                    // Footer: IBAN bilgileri
                     page.Footer().Element(c =>
                     {
                         c.Padding(10).Border(1).Column(col =>
                         {
                             col.Item().Row(row =>
                             {
-                                row.RelativeItem().PaddingLeft(5).Text("   HALK BANK: TR55 001 2009 3010 0016 0000 90").FontSize(9);
+                                row.RelativeItem().PaddingLeft(5).Text("HALK BANK: TR55 001 2009 3010 0016 0000 90").FontSize(9);
                             });
 
                             col.Item().Row(row =>
                             {
-                                row.RelativeItem().PaddingLeft(5).Text("   VAKIF BANK: TR86 0001 5800 7296 3803 95").FontSize(9);
+                                row.RelativeItem().PaddingLeft(5).Text("VAKIF BANK: TR86 0001 5800 7296 3803 95").FontSize(9);
                             });
 
                             col.Item().Element(e =>
@@ -192,7 +226,9 @@ namespace InvoiceAPI.Templates
                             });
                         });
                     });
+
                 });
+
             });
         }
 
