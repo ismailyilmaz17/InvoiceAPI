@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<InvoiceData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InvoiceNumber>string</InvoiceNumber>
+  <InvoiceDate>2024-11-07T11:01:40.266Z</InvoiceDate>
+  <CustomerInfo>
+    <CustomerName>string</CustomerName>
+    <TaxOffice>string</TaxOffice>
+    <TCKN>string</TCKN>
+    <Email>string</Email>
+  </CustomerInfo>
+  <Items>
+    <InvoiceItem>
+      <Description>string</Description>
+      <Quantity>0</Quantity>
+      <UnitPrice>0</UnitPrice>
+      <TaxRate>0</TaxRate>
+    </InvoiceItem>
+  </Items>
+  <InvoiceDetails>
+    <CustomizationNumber>string</CustomizationNumber>
+    <Scenario>string</Scenario>
+    <InvoiceType>string</InvoiceType>
+    <InvoiceDate>2024-11-07T11:01:40.266Z</InvoiceDate>
+    <EditDate>2024-11-07T11:01:40.266Z</EditDate>
+  </InvoiceDetails>
+  <IndexInfo>
+    <ActiveIndex>0</ActiveIndex>
+    <T1Index>0</T1Index>
+    <T2Index>0</T2Index>
+    <T3Index>0</T3Index>
+  </IndexInfo>
+</InvoiceData>

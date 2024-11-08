@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<InvoiceData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InvoiceNumber>INV-123456</InvoiceNumber>
+  <InvoiceDate>2024-10-23T00:00:00</InvoiceDate>
+  <CustomerInfo>
+    <CustomerName>Ahmet Yılmaz</CustomerName>
+    <TaxOffice>Merzifon</TaxOffice>
+    <TCKN>11111111112</TCKN>
+    <Email>deneme@deneme.com</Email>
+  </CustomerInfo>
+  <Items>
+    <InvoiceItem>
+      <Description>Elektrik enerji bedeli</Description>
+      <Quantity>1</Quantity>
+      <UnitPrice>2000.00</UnitPrice>
+      <TaxRate>20.00</TaxRate>
+    </InvoiceItem>
+    <InvoiceItem>
+      <Description>Dağıtım bedeli</Description>
+      <Quantity>2</Quantity>
+      <UnitPrice>500.00</UnitPrice>
+      <TaxRate>20.00</TaxRate>
+    </InvoiceItem>
+  </Items>
+  <InvoiceDetails>
+    <CustomizationNumber>TR1.2</CustomizationNumber>
+    <Scenario>TEMELFATURA</Scenario>
+    <InvoiceType>SATIŞ</InvoiceType>
+    <InvoiceDate>2024-10-23T00:00:00</InvoiceDate>
+    <EditDate>2024-10-23T00:00:00</EditDate>
+  </InvoiceDetails>
+  <IndexInfo>
+    <ActiveIndex>3771.440</ActiveIndex>
+    <T1Index>2955.680</T1Index>
+    <T2Index>423.760</T2Index>
+    <T3Index>392.000</T3Index>
+  </IndexInfo>
+</InvoiceData>
